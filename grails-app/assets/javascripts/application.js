@@ -6,6 +6,8 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery-2.1.3.js
+//= require d3.min.js
+//= require c3.min.js
 //= require_tree .
 //= require_self
 
