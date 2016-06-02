@@ -166,14 +166,14 @@
 </head>
 
 <body>
-    <div class="mdl-typography--text-center">
-        <div class="mdl-typography--display-1-color-contrast">Location evolution</div>
-    </div>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-typography--text-center">
+              <div class="mdl-typography--display-1-color-contrast">Location evolution</div>
+          </div>
           <p class="mdl-typography--title">Information</p>
           <p class="mdl-typography--body-1">
-              This visualization shows the evolution of the location of a single person.
+              This visualization shows the evolution of the location of a single person throughout the week.
           </p>
           <p class="mdl-typography--body-1">
               The z axis (# Hours) represents the total number of hours the person has spent in a location (y axis) during a day (x axis).
