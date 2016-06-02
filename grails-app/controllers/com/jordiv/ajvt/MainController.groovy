@@ -57,51 +57,336 @@ class MainController {
     }
 
     def graphData2() {
+      // Max size should be 100. Then a simple cross multiplication (rule of
+      // three) should be enough.
+      //
+      // Dummy data: 885, 90, 390, 75.
+      // Converted : 100, 10.17, 44.07, 8.47
+
+      def weekday = params?.id ? Integer.parseInt(params?.id) : 1
+
+      def csv = new File("/opt/test-data.csv")
+
+      def home = 0
+      def unusual_home = 0
+      def family_home = 0
+      def friend_home = 0
+      def university = 0
+      def workplace = 0
+      def leisure = 0
+      def commercial = 0
+      def street_transport = 0
+      def other = 0
+
+      csv.splitEachLine(',') { row ->
+        if(Integer.parseInt(row[0]) == weekday) {
+          switch(Integer.parseInt(row[2])) {
+            case 1: home++; break;
+            case 2: unusual_home++; break;
+            case 3: family_home++; break;
+            case 4: friend_home++; break;
+            case 5: university++; break;
+            case 6: workplace++; break;
+            case 7: leisure++; break;
+            case 8: commercial++; break;
+            case 9: street_transport++; break;
+            default: other++;
+          }
+        }
+      }
+
+      double max = Double.NEGATIVE_INFINITY;
+
+      for (double d : [home, unusual_home, family_home, friend_home, university, workplace, leisure, commercial, street_transport, other]) {
+        if (d > max) max = d;
+      }
+
+      def n_home = ( home * 100) / max
+      def n_unusual_home = (unusual_home * 100) / max
+      def n_family_home = (family_home * 100) / max
+      def n_friend_home = (friend_home * 100) / max
+      def n_university = (university * 100) / max
+      def n_workplace = (workplace * 100) / max
+      def n_leisure = (leisure * 100) / max
+      def n_commercial = (commercial * 100) / max
+      def n_street_transport = (street_transport * 100) / max
+      def n_other = (other * 100) / max
+
+
+      def weekday_name = ""
+
+      if(weekday == 1) weekday_name = "Monday"
+      else if(weekday == 2) weekday_name = "Tuesday"
+      else if(weekday == 3) weekday_name = "Wednesday"
+      else if(weekday == 4) weekday_name = "Thursday"
+      else if(weekday == 5) weekday_name = "Friday"
+      else if(weekday == 6) weekday_name = "Saturday"
+      else if(weekday == 7) weekday_name = "Sunday"
+
       def data = [
-        "name": "test",
-        "img": "",
+        "name": weekday_name,
+        "img": weekday_name.toLowerCase(),
         "children": [
-          [
-          "name": "Locations",
-          "children" : [
-            [
-              "hero": "Home",
-              "name": "Home",
-              "link": "",
-              "img": "home",
-              "size": 60,
-              "value": 2
-            ],
-            [
-              "hero": "Work",
-              "name": "Work",
-              "link": "",
-              "img": "work",
-              "size": 40,
-              "value": 2
-            ],
-            [
-              "hero": "University",
-              "name": "University",
-              "link": "",
-              "img": "university",
-              "size": 40,
-              "value": 2
-            ],
-            [
-              "hero": "Eat",
-              "name": "Eat",
-              "link": "",
-              "img": "eat",
-              "size": 50,
-              "value": 2
-            ]
-          ]
-          ]
+
         ]
       ]
 
+      if(home > 0) {
+        data["children"] << [
+          "name": "Home (" + home * 15 + ")",
+          "desc": "Home",
+          "link": "",
+          "img": "1",
+          "size": n_home
+        ]
+      }
+
+      if(unusual_home > 0) {
+        data["children"] << [
+          "name": "Unusual Home (" + unusual_home * 15 + ")",
+          "desc": "Home",
+          "link": "",
+          "img": "2",
+          "size": n_unusual_home
+        ]
+      }
+
+      if(family_home > 0) {
+        data["children"] << [
+          "name": "Family Home (" + family_home * 15 + ")",
+          "desc": "Family Home",
+          "link": "",
+          "img": "3",
+          "size": n_family_home
+        ]
+      }
+
+      if(friend_home > 0) {
+        data["children"] << [
+          "name": "Friend Home (" + friend_home * 15 + ")",
+          "desc": "Friend Home",
+          "link": "",
+          "img": "4",
+          "size": n_friend_home
+        ]
+      }
+
+      if(university > 0) {
+        data["children"] << [
+          "name": "University (" + university * 15 + ")",
+          "desc": "University",
+          "link": "",
+          "img": "5",
+          "size": n_university
+        ]
+      }
+
+      if(workplace > 0) {
+        data["children"] << [
+          "name": "Workplace (" + workplace * 15 + ")",
+          "desc": "Workplace",
+          "link": "",
+          "img": "6",
+          "size": n_workplace
+        ]
+      }
+
+      if(leisure > 0) {
+        data["children"] << [
+          "name": "Leisure (" + leisure * 15 + ")",
+          "desc": "Leisure",
+          "link": "",
+          "img": "7",
+          "size": n_leisure
+        ]
+      }
+
+      if(commercial > 0) {
+        data["children"] << [
+          "name": "Commercial (" + commercial * 15 + ")",
+          "desc": "Commercial",
+          "link": "",
+          "img": "8",
+          "size": n_commercial
+        ]
+      }
+
+      if(street_transport > 0) {
+        data["children"] << [
+          "name": "Street / Transport (" + street_transport * 15 + ")",
+          "desc": "Street / Transport",
+          "link": "",
+          "img": "9",
+          "size": n_street_transport
+        ]
+      }
+
+      if(other > 0) {
+        data["children"] << [
+          "name": "Other (" + other * 15 + ")",
+          "desc": "Other",
+          "link": "",
+          "img": "10",
+          "size": n_other
+        ]
+      }
+
+      /*
+      [
+        "name": "Home (" + home + ")",
+        "desc": "Home",
+        "link": "",
+        "img": "1",
+        "size": n_home
+      ],
+      [
+        "name": "Unusual Home (" + unusual_home + ")",
+        "desc": "Home",
+        "link": "",
+        "img": "2",
+        "size": n_unusual_home
+      ],
+      [
+        "name": "Family Home (" + family_home + ")",
+        "desc": "Family Home",
+        "link": "",
+        "img": "3",
+        "size": n_family_home
+      ],
+      [
+        "name": "Friend Home (" + friend_home + ")",
+        "desc": "Friend Home",
+        "link": "",
+        "img": "4",
+        "size": n_friend_home
+      ],
+      [
+        "name": "University (" + university + ")",
+        "desc": "University",
+        "link": "",
+        "img": "5",
+        "size": n_university
+      ],
+      [
+        "name": "Workplace (" + workplace + ")",
+        "desc": "Workplace",
+        "link": "",
+        "img": "6",
+        "size": n_workplace
+      ],
+      [
+        "name": "Leisure (" + leisure + ")",
+        "desc": "Leisure",
+        "link": "",
+        "img": "7",
+        "size": n_leisure
+      ],
+      [
+        "name": "Commercial (" + commercial + ")",
+        "desc": "Commercial",
+        "link": "",
+        "img": "8",
+        "size": n_commercial
+      ],
+      [
+        "name": "Street / Transport (" + street_transport + ")",
+        "desc": "Street / Transport",
+        "link": "",
+        "img": "9",
+        "size": n_street_transport
+      ],
+      [
+        "name": "Other (" + other + ")",
+        "desc": "Other",
+        "link": "",
+        "img": "10",
+        "size": n_other
+      ]
+      */
 
       render data as JSON
+    }
+
+    def timeSeries() {
+      def data = [
+        'label': 'Home',
+        'data': [[
+          'type': 'TimelineChart.TYPE.POINT',
+          'at': 'new Date(2012, 12, 2, 1, 36, 45, 0)'
+        ], [
+          'type': 'TimelineChart.TYPE.POINT',
+          'at': 'new Date(2012, 12, 9, 1, 36, 45, 0)'
+        ], [
+          'type': 'TimelineChart.TYPE.POINT',
+          'at': 'new Date(2012, 12, 9, 1, 36, 45, 0)'
+        ]]
+      ]
+
+      render(view: "timeSeries", model: ['data': data as JSON])
+    }
+
+    def graph3d() {
+      def data = []
+
+      def csv = new File("/opt/test-data.csv")
+
+      def home = 0
+      def unusual_home = 0
+      def family_home = 0
+      def friend_home = 0
+      def university = 0
+      def workplace = 0
+      def leisure = 0
+      def commercial = 0
+      def street_transport = 0
+      def other = 0
+
+      def currentDay = 1
+      def t = 0
+      csv.splitEachLine(',') { row ->
+        if(Integer.parseInt(row[0]) != currentDay) {
+          t = 0
+
+
+          currentDay = Integer.parseInt(row[0])
+          home = 0
+          unusual_home = 0
+          family_home = 0
+          friend_home = 0
+          university = 0
+          workplace = 0
+          leisure = 0
+          commercial = 0
+          street_transport = 0
+          other = 0
+        }
+
+        data.add([x: 22 + currentDay, y: 0, z: home, t: t])
+        data.add([x: 22 + currentDay, y: 1, z: unusual_home, t: t])
+        data.add([x: 22 + currentDay, y: 2, z: family_home, t: t])
+        data.add([x: 22 + currentDay, y: 3, z: friend_home, t: t])
+        data.add([x: 22 + currentDay, y: 4, z: university, t: t])
+        data.add([x: 22 + currentDay, y: 5, z: workplace, t: t])
+        data.add([x: 22 + currentDay, y: 6, z: leisure, t: t])
+        data.add([x: 22 + currentDay, y: 7, z: commercial, t: t])
+        data.add([x: 22 + currentDay, y: 8, z: street_transport, t: t])
+        data.add([x: 22 + currentDay, y: 9, z: other, t: t])
+
+        switch(Integer.parseInt(row[2])) {
+          case 1: home++; break;
+          case 2: unusual_home++; break;
+          case 3: family_home++; break;
+          case 4: friend_home++; break;
+          case 5: university++; break;
+          case 6: workplace++; break;
+          case 7: leisure++; break;
+          case 8: commercial++; break;
+          case 9: street_transport++; break;
+          default: other++;
+        }
+        t++
+      }
+
+      render(view: "graph3d", model: ['data': data as JSON])
     }
 }

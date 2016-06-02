@@ -37,7 +37,7 @@
         <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
           <div class="mdl-layout__header-row">
             <span class="android-title mdl-layout-title">
-              <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'emovix-logo-small.png')}" alt="#eMOVIX Logo"/>
+              <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'pencil-and-notebook.png')}" alt="AJVT Logo"/>
             </span>
             <!-- Add spacer, to align navigation to the right in desktop -->
             <div class="android-header-spacer mdl-layout-spacer"></div>
@@ -50,14 +50,14 @@
               </nav>
             </div>
             <span class="android-mobile-title mdl-layout-title">
-              <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'emovix-logo-small.png')}" alt="#eMOVIX Logo">
+              <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'pencil-and-notebook.png')}" alt="AJVT Logo">
             </span>
           </div>
         </div>
 
         <div class="android-drawer mdl-layout__drawer">
           <span class="mdl-layout-title">
-            <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'emovix-logo-small.png')}">
+            <img class="emovix-logo-image" src="${resource(dir: 'images', file: 'pencil-and-notebook.png')}">
           </span>
           <nav class="mdl-navigation">
             <g:link controller="main" action="index" class="mdl-navigation__link  mdl-typography--text-uppercase">

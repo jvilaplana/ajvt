@@ -147,7 +147,7 @@ text {
                     .call(position)
                     .sort(order);
 
-                    
+
 /*
               dot.append("image")
               .attr("xlink:href", function(d) { return '${asset.assetPath(src: 'udl.png')}'; })
@@ -261,6 +261,19 @@ text {
         </script>
     </head>
     <body>
+
+      <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+      <p>
+        <g:link controller="main" action="graph2">Daily location chart</g:link>
+      </p>
+      <p>
+        <g:link controller="main" action="timeSeries">Time series chart</g:link>
+      </p>
+    </div>
+  </div>
+
+<%--
       <svg id="mySvg" width="80" height="80">
         <defs id="mdef">
           <pattern id="image" x="0" y="0" height="40" width="40">
@@ -283,5 +296,6 @@ text {
               <g:message code="main.index.slogan" />
             </div>
           </div>
+          --%>
     </body>
 </html>

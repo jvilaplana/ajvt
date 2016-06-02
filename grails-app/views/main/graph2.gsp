@@ -25,47 +25,121 @@
 </head>
 
 <body>
-      <h1>AJVT</h1>
-      <h2>Click to view their identity</h2>
-      <h3>And link to their web page!</h3>
-      <section id="vis"></section>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col">
+          <h1 style="font-size: 20px;">AJVT</h1>
+          <p>
+            <g:link action="graph2" id="1">Monday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="2">Tuesday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="3">Wednesday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="4">Thursday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="5">Friday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="6">Saturday</g:link>
+          </p>
+          <p>
+            <g:link action="graph2" id="7">Sunday</g:link>
+          </p>
+          <h2 style="display: none;">Click to view their identity</h2>
+          <h3 style="display: none;">And link to their web page!</h3>
+        </div>
+        <div class="mdl-cell mdl-cell--10-col">
+          <section id="vis"></section>
+        </div>
+      </div>
+
 <script>
 $(function() {
-// some colour variables
+  // some colour variables
   var tcBlack = "#130C0E";
+  var curDay = 1;
 
-// rest of vars
-var w = 960,
-    h = 800,
-    maxNodeSize = 50,
-    x_browser = 20,
-    y_browser = 25,
-    root;
+  // rest of vars
+  var w = 960,
+      h = 600,
+      maxNodeSize = 50,
+      x_browser = 20,
+      y_browser = 25,
+      root;
 
-var vis;
-var force = d3.layout.force();
+  var vis;
+  var force = d3.layout.force();
 
-vis = d3.select("#vis").append("svg").attr("width", w).attr("height", h);
+  vis = d3.select("#vis").append("svg").attr("width", w).attr("height", h);
 
-var url = "${createLink(controller:'main',action: 'graphData2') }";
-d3.json(url, function(json) {
+  var url = "${createLink(controller:'main',action: 'graphData2', id: params?.id) }";
 
+  d3.json(url, function(json) {
   root = json;
   root.fixed = true;
   root.x = w / 2;
   root.y = h / 4;
 
-
-        // Build the path
+  // Build the path
   var defs = vis.insert("svg:defs")
-      .data(["end"]);
-
+    .data(["end"]);
 
   defs.enter().append("svg:path")
       .attr("d", "M0,-5L10,0L0,5");
 
-     update();
+
+   update();
+
+   function collapse(d) {
+     if (d.children) {
+       d._children = d.children;
+       d._children.forEach(collapse);
+       d.children = null;
+     }
+   }
+   root.children.forEach(collapse);
+   update();
 });
+
+
+function reloadDay() {
+  curDay++;
+  if(curDay > 7) curDay = 1;
+
+  var url = "${createLink(controller:'main',action: 'graphData2') }/" + curDay;
+  d3.json(url, function(json) {
+  root = json;
+  root.fixed = true;
+  root.x = w / 2;
+  root.y = h / 4;
+
+  // Build the path
+  var defs = vis.insert("svg:defs")
+    .data(["end"]);
+
+  defs.enter().append("svg:path")
+      .attr("d", "M0,-5L10,0L0,5");
+
+
+   update();
+
+   function collapse(d) {
+     if (d.children) {
+       d._children = d.children;
+       d._children.forEach(collapse);
+       d.children = null;
+     }
+   }
+   root.children.forEach(collapse);
+   update();
+});
+}
+
+$('#wololo').click(function() { reloadDay(); });
 
 
 /**
@@ -80,12 +154,13 @@ function update() {
         .links(links)
         .gravity(0.05)
     .charge(-1500)
-    .linkDistance(200)
+    .linkDistance(300)
     .friction(0.5)
     .linkStrength(function(l, i) {return 1; })
     .size([w, h])
     .on("tick", tick)
         .start();
+
 
    var path = vis.selectAll("path.link")
       .data(links, function(d) { return d.target.id; });
@@ -95,11 +170,8 @@ function update() {
       // .attr("marker-end", "url(#end)")
       .style("stroke", "#eee");
 
-
   // Exit any old paths.
   path.exit().remove();
-
-
 
   // Update the nodes…
   var node = vis.selectAll("g.node")
@@ -116,8 +188,12 @@ function update() {
   // Append a circle
   nodeEnter.append("svg:circle")
       .attr("r", function(d) { return d.size || 4.5; })
-      .style("fill", "#eee");
-
+      .style("fill", function (d) {
+        if(d.size <= 20) return "#99c2ff";
+        else if(d.size <= 50) return "#66a3ff";
+        else if(d.size <= 80) return "#3385ff";
+        else if(d.size <= 100) return "#0066ff";
+      });
 
   // Append images
   var images = nodeEnter.append("svg:image")
@@ -128,6 +204,38 @@ function update() {
             case "work": return "${asset.assetPath(src: 'work.png')}";
             case "university": return "${asset.assetPath(src: 'university.png')}";
             case "eat": return "${asset.assetPath(src: 'eat.png')}";
+            case "monday": return "${asset.assetPath(src: 'monday-calendar-page.png')}";
+            case "tuesday": return "${asset.assetPath(src: 'tuesday-daily-calendar-page.png')}";
+            case "wednesday": return "${asset.assetPath(src: 'wednesday-calendar-daily-page.png')}";
+            case "thursday": return "${asset.assetPath(src: 'thursday-calendar-daily-page-interface-symbol.png')}";
+            case "friday": return "${asset.assetPath(src: 'friday-daily-calendar-page.png')}";
+            case "saturday": return "${asset.assetPath(src: 'saturday-calendar-daily-page-interface-symbol.png')}";
+            case "sunday": return "${asset.assetPath(src: 'sunday-daily-calendar-page.png')}";
+            case "locations": return "${asset.assetPath(src: 'university.png')}";
+
+
+            // De la taula de codis:
+
+            // Usual residence
+            case "1": return "${asset.assetPath(src: 'home.png')}";
+            // Unusual residence
+            case "2": return "${asset.assetPath(src: 'house-visiting.png')}";
+            // Family residence
+            case "3": return "${asset.assetPath(src: 'family-under-a-ceiling-outline.png')}";
+            // Friend residence
+            case "4": return "${asset.assetPath(src: 'party-in-house.png')}";
+            // University
+            case "5": return "${asset.assetPath(src: 'university.png')}";
+            // Workplace
+            case "6": return "${asset.assetPath(src: 'work.png')}";
+            // Leisure
+            case "7": return "${asset.assetPath(src: 'park.png')}";
+            // Commercial
+            case "8": return "${asset.assetPath(src: 'shopping-cart-empty-side-view.png')}";
+            // Street / transportation
+            case "9": return "${asset.assetPath(src: 'silhouette-crossing-street.png')}";
+            // Other
+            case "10": return "${asset.assetPath(src: 'global-map.png')}";
           }
         })
         .attr("x", function(d) { return -25;})
@@ -137,11 +245,11 @@ function update() {
 
   // make the image grow a little on mouse over and add the text details on click
   var setEvents = images
-          // Append hero text
+          // Append info text
           .on( 'click', function (d) {
-              d3.select("h1").html(d.hero);
-              d3.select("h2").html(d.name);
-              d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.hero + " web page ⇢"+ "</a>" );
+              d3.select("h1").html(d.name);
+              d3.select("h2").html(d.desc);
+              d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.name + " web page ⇢"+ "</a>" );
            })
 
           .on( 'mouseenter', function() {
@@ -163,13 +271,13 @@ function update() {
               .attr("width", 50);
           });
 
-  // Append hero name on roll over next to the node as well
+  // Append location name on roll over next to the node as well
   nodeEnter.append("text")
       .attr("class", "nodetext")
       .attr("x", x_browser)
       .attr("y", y_browser +15)
       .attr("fill", tcBlack)
-      .text(function(d) { return d.hero; });
+      .text(function(d) { return d.name; });
 
 
   // Exit any old nodes.
@@ -180,11 +288,12 @@ function update() {
   path = vis.selectAll("path.link");
   node = vis.selectAll("g.node");
 
+
+
 function tick() {
-
-
+    nodes[0].x = w / 2;
+    nodes[0].y = h / 2;
     path.attr("d", function(d) {
-
      var dx = d.target.x - d.source.x,
            dy = d.target.y - d.source.y,
            dr = Math.sqrt(dx * dx + dy * dy);
@@ -194,7 +303,7 @@ function tick() {
             + dr + " 0 0,1 "
             + d.target.x + ","
             + d.target.y;
-  });
+    });
     node.attr("transform", nodeTransform);
   }
 }
@@ -244,9 +353,12 @@ function flatten(root) {
   recurse(root);
   return nodes;
 }
+
 });
 
 </script>
+
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 </body>
 </html>
