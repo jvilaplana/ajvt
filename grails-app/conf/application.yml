@@ -96,7 +96,10 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:mysql://localhost/ajvt
+            driverClassName: com.mysql.jdbc.Driver
+            username: emovix
+            password: em0v1x
             properties:
                 jmxEnabled: true
                 initialSize: 5

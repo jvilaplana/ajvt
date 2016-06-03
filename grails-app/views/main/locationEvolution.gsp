@@ -111,7 +111,7 @@
         },
 
         xValueLabel: function(value) {
-            return vis.moment().add(value + 2, 'days').format('dddd');
+            return vis.moment().add(value + 1, 'days').format('dddd');
         },
 
         yValueLabel: function(value) {
