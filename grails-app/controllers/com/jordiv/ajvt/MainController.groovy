@@ -52,8 +52,8 @@ class MainController {
       render data as JSON
     }
 
-    def graph2() {
-      render(view: "graph2", model: [])
+    def dailyLocation() {
+      render(view: "dailyLocation", model: [])
     }
 
     def graphData2() {
@@ -325,7 +325,7 @@ class MainController {
       render(view: "timeSeries", model: ['data': data as JSON])
     }
 
-    def graph3d() {
+    def locationEvolution() {
       def data = []
 
       def csv = new File("/opt/test-data.csv")
@@ -387,6 +387,6 @@ class MainController {
         t++
       }
 
-      render(view: "graph3d", model: ['data': data as JSON])
+      render(view: "locationEvolution", model: ['data': data as JSON])
     }
 }

@@ -80,9 +80,8 @@ a img{
 }
 
 
-.emovix-logo-image {
-  height: 60px;
-  width: 60px;
+.ajvt-logo-image {
+  height: 48px;
 }
 
 
@@ -181,12 +180,12 @@ a img{
   }
 
   .android-drawer span.mdl-navigation__link.mdl-navigation__link {
-    color: #8bc34a;
+    color: #e6ffff;
   }
 
   .android-drawer .mdl-layout-title {
     position: relative;
-    background: #6ab344;
+    background: #C6DABF;
     height: 160px;
   }
 

@@ -3,7 +3,7 @@
   stroke: none; }
 
 .timeline-chart line {
-  stroke: black; }
+  stroke: #D0E1D4; }
 
 .timeline-chart rect, .timeline-chart rect.chart-bounds {
   fill: transparent; }
@@ -11,5 +11,5 @@
 .timeline-chart rect.interval {
   ry: 5;
   rx: 5;
-  fill: rgb(83, 83, 198);
-  stroke: #2b2b2b; }
+  fill: #E4BE9E;
+  stroke: #71697A; }

@@ -2,9 +2,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Graph 3D Axis Ticks</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-
   <style>
     #mygraph {
       background-color: #FBF8EF;
@@ -14,12 +12,8 @@
       height: 600px;
     }
   </style>
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css">
-
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
-
-
   <script type="text/javascript">
   $(function() {
     var data = null;
@@ -169,7 +163,7 @@
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--12-col">
           <div class="mdl-typography--text-center">
-              <div class="mdl-typography--display-1-color-contrast">Location evolution</div>
+              <div class="mdl-typography--display-1-color-contrast">Location Evolution Visualization</div>
           </div>
           <p class="mdl-typography--title">Information</p>
           <p class="mdl-typography--body-1">

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="main" />
     <title>D3 Timeline Chart</title>
-
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
     <link rel="stylesheet" href="http://rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
     <asset:stylesheet src="timeline-chart.css"/>
@@ -15,19 +12,17 @@
         box-sizing: border-box;
     }
 
-
-
     #chart {
-        width: 90%;
-        height: 150px;
-        background: rgb(255, 255, 230);
+        width: 95%;
+        height: 200px;
+        background: #F2F6D0;
         opacity: 0.9;
         border-radius: 5px;
-        border: 1px solid #2b2b2b;
+        border: 1px dotted #71697A;
     }
 
     #chart line {
-        stroke: #2b2b2b;
+        stroke: #71697A;
     }
 
     /* Override d3tip */
@@ -66,23 +61,21 @@
 </head>
 
 <body>
-
-  <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--12-col">
-    <h2>Timeseries Chart</h2>
-
-    <hr />
-
-    <section flex flex-full-center>
-        <div id="chart"></div>
-    </section>
-
+    <div class="mdl-typography--text-center">
+        <div class="mdl-typography--display-1-color-contrast">
+            Time Series Visualization
+        </div>
     </div>
-  </div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <section flex flex-full-center>
+                <div id="chart"></div>
+            </section>
+        </div>
+    </div>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min.js"></script>
-
 
     <script id="code">
     'use strict';
@@ -154,15 +147,15 @@
                 .attr('height', 32)
                 .attr("xlink:href", function(d, i) {
                   console.log(d.label);
-                  if(d.label == "1") return "${assetPath(src: 'home.png')}";
+                  if(d.label == "1") return "${assetPath(src: 'icons/home.svg')}";
                   else if(d.label == "2") return "${assetPath(src: 'house-visiting.png')}";
-                  else if(d.label == "3") return "${assetPath(src: 'family-under-a-ceiling-outline.png')}";
+                  else if(d.label == "3") return "${assetPath(src: 'icons/family.svg')}";
                   else if(d.label == "4") return "${assetPath(src: 'party-in-house.png')}";
-                  else if(d.label == "5") return "${assetPath(src: 'university.png')}";
+                  else if(d.label == "5") return "${assetPath(src: 'icons/university.svg')}";
                   else if(d.label == "6") return "${assetPath(src: 'work.png')}";
                   else if(d.label == "7") return "${assetPath(src: 'park.png')}";
-                  else if(d.label == "8") return "${assetPath(src: 'shopping-cart-empty-side-view.png')}";
-                  else if(d.label == "9") return "${assetPath(src: 'silhouette-crossing-street.png')}";
+                  else if(d.label == "8") return "${assetPath(src: 'icons/commercial.svg')}";
+                  else if(d.label == "9") return "${assetPath(src: 'icons/street-transport.svg')}";
                   else return "${assetPath(src: 'global-map.png')}";
                 });
                 svg.selectAll('.group-label').data(data).enter()
