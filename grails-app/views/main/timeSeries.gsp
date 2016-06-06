@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="layout" content="main" />
-    <title>D3 Timeline Chart</title>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
     <link rel="stylesheet" href="http://rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
     <asset:stylesheet src="timeline-chart.css"/>
@@ -146,7 +145,6 @@
                 .attr('width', 32)
                 .attr('height', 32)
                 .attr("xlink:href", function(d, i) {
-                  console.log(d.label);
                   if(d.label == "1") return "${assetPath(src: 'icons/home.svg')}";
                   else if(d.label == "2") return "${assetPath(src: 'house-visiting.png')}";
                   else if(d.label == "3") return "${assetPath(src: 'icons/family.svg')}";
@@ -342,6 +340,7 @@
         </g:applyCodec>
 
         const element = document.getElementById('chart');
+
         const data = [{
             label: '1',
             data: [{

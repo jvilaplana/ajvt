@@ -308,6 +308,18 @@ class MainController {
     }
 
     def timeSeries() {
+        def id = params?.id
+
+        def csvFile = "test-data.csv"
+
+        if(id == "2") csvFile = "cara.csv"
+        else if(id == "3") csvFile = "sara.csv"
+        else if(id == "4") csvFile = "ilargia.csv"
+
+        //def csv = new File("/opt/test-data.csv")
+        def csv = new File("/opt/" + csvFile)
+
+
       def data = [
         'label': 'Home',
         'data': [[
@@ -328,7 +340,16 @@ class MainController {
     def locationEvolution() {
       def data = []
 
-      def csv = new File("/opt/test-data.csv")
+      def id = params?.id
+
+      def csvFile = "test-data.csv"
+
+      if(id == "2") csvFile = "cara.csv"
+      else if(id == "3") csvFile = "sara.csv"
+      else if(id == "4") csvFile = "ilargia.csv"
+
+      //def csv = new File("/opt/test-data.csv")
+      def csv = new File("/opt/" + csvFile)
 
       def home = 0
       def unusual_home = 0
@@ -343,6 +364,8 @@ class MainController {
 
       def currentDay = 1
       def t = 0
+      def date = new Date()
+
       csv.splitEachLine(',') { row ->
         if(Integer.parseInt(row[0]) != currentDay) {
           t = 0
@@ -372,7 +395,14 @@ class MainController {
         data.add([x: 22 + currentDay, y: 8, z: street_transport, t: t])
         data.add([x: 22 + currentDay, y: 9, z: other, t: t])
 
-        switch(Integer.parseInt(row[2])) {
+        def locationValue
+        if(row[2] == null || row[2] == '') {
+            if(row[3] == null || row[3] == '') locationValue = "99"
+            else locationValue = row[3]
+        }
+        else locationValue = row[2]
+
+        switch(Integer.parseInt(locationValue)) {
           case 1: home++; break;
           case 2: unusual_home++; break;
           case 3: family_home++; break;

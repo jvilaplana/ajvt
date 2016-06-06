@@ -111,7 +111,9 @@
         },
 
         xValueLabel: function(value) {
-            return vis.moment().add(value + 1, 'days').format('dddd');
+            var v = new Date("May 21, 2016 00:00:00");
+            v.setDate(value);
+            return vis.moment().add(v.getDay() - 1, 'days').format('dddd');
         },
 
         yValueLabel: function(value) {
@@ -178,6 +180,79 @@
           <p class="mdl-typography--body-1">
               You can pause the animation and move forward and backwards using the controls at the bottom. You can also zoom in / out using the mouse wheel and rotate the camera by holding the left mouse button. Click a bar to see its exact value.
           </p>
+          <p class="mdl-typography--body-1">
+              There are 4 examples with different participants for this visualization. Click the buttons below to change from one participant to another.
+          </p>
+          <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--3-col">
+                  <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "1" || params?.id == null ? "background-color: #F5ECCE;" : "" }">
+                      <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Nekoru</h2>
+                      </div>
+                      <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                          <p>
+                              Female; 19 years old; middle class; Student; Barcelona
+                          </p>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border">
+                          <g:link controller="main" action="locationEvolution" id="1" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                              Select participant
+                          </g:link>
+                      </div>
+                  </div>
+              </div>
+              <div class="mdl-cell mdl-cell--3-col">
+                  <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "2" ? "background-color: #F5ECCE;" : "" }">
+                      <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Cara</h2>
+                      </div>
+                      <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                          <p>
+                              Female; 20 years old; middle-upper class; Student / Worker; Lleida
+                          </p>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border">
+                          <g:link controller="main" action="locationEvolution" id="2" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                              Select participant
+                          </g:link>
+                      </div>
+                  </div>
+              </div>
+              <div class="mdl-cell mdl-cell--3-col">
+                  <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "3" ? "background-color: #F5ECCE;" : "" }">
+                      <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Sara</h2>
+                      </div>
+                      <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                          <p>
+                              Female; 21 years old; middle class; Student / Worker; Lleida
+                          </p>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border">
+                          <g:link controller="main" action="locationEvolution" id="3" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                              Select participant
+                          </g:link>
+                      </div>
+                  </div>
+              </div>
+              <div class="mdl-cell mdl-cell--3-col">
+                  <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "4" ? "background-color: #F5ECCE;" : "" }">
+                      <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Ilargia</h2>
+                      </div>
+                      <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                          <p>
+                              Female; 20 years old; middle class; Student / Worker; Lleida
+                          </p>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border">
+                          <g:link controller="main" action="locationEvolution" id="4" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                              Select participant
+                          </g:link>
+                      </div>
+                  </div>
+              </div>
+          </div>
           <p class="mdl-typography--body-1">
             Click this button to scroll down to the chart
             <a href="#mygraph">
