@@ -238,7 +238,7 @@
               <div class="mdl-cell mdl-cell--3-col">
                   <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "4" ? "background-color: #F5ECCE;" : "" }">
                       <div class="mdl-card__title">
-                          <h2 class="mdl-card__title-text">Ilargia</h2>
+                          <h2 class="mdl-card__title-text">Irina</h2>
                       </div>
                       <div class="mdl-card__supporting-text mdl-typography--text-justify">
                           <p>

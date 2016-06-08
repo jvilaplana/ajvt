@@ -13,7 +13,7 @@
 
     #chart {
         width: 95%;
-        height: 200px;
+        height: ${count};
         background: #F2F6D0;
         opacity: 0.9;
         border-radius: 5px;
@@ -63,6 +63,76 @@
     <div class="mdl-typography--text-center">
         <div class="mdl-typography--display-1-color-contrast">
             Time Series Visualization
+        </div>
+    </div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col">
+          <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "1" || params?.id == null ? "background-color: #F5ECCE;" : "" }">
+              <div class="mdl-card__title">
+                  <h2 class="mdl-card__title-text">Nekoru</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                  <p>
+                      Female; 19 years old; middle class; Student; Barcelona
+                  </p>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                  <g:link controller="main" action="timeSeries" id="1" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                      Select participant
+                  </g:link>
+              </div>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col">
+          <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "2" ? "background-color: #F5ECCE;" : "" }">
+              <div class="mdl-card__title">
+                  <h2 class="mdl-card__title-text">Cara</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                  <p>
+                      Female; 20 years old; middle-upper class; Student / Worker; Lleida
+                  </p>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                  <g:link controller="main" action="timeSeries" id="2" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                      Select participant
+                  </g:link>
+              </div>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col">
+          <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "3" ? "background-color: #F5ECCE;" : "" }">
+              <div class="mdl-card__title">
+                  <h2 class="mdl-card__title-text">Sara</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                  <p>
+                      Female; 21 years old; middle class; Student / Worker; Lleida
+                  </p>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                  <g:link controller="main" action="timeSeries" id="3" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                      Select participant
+                  </g:link>
+              </div>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col">
+          <div class="mdl-card mdl-shadow--2dp" style="${ params?.id == "4" ? "background-color: #F5ECCE;" : "" }">
+              <div class="mdl-card__title">
+                  <h2 class="mdl-card__title-text">Irina</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-typography--text-justify">
+                  <p>
+                      Female; 20 years old; middle class; Student / Worker; Lleida
+                  </p>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                  <g:link controller="main" action="timeSeries" id="4" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                      Select participant
+                  </g:link>
+              </div>
+          </div>
         </div>
     </div>
     <div class="mdl-grid">
@@ -146,15 +216,15 @@
                 .attr('height', 32)
                 .attr("xlink:href", function(d, i) {
                   if(d.label == "1") return "${assetPath(src: 'icons/home.svg')}";
-                  else if(d.label == "2") return "${assetPath(src: 'house-visiting.png')}";
+                  else if(d.label == "2") return "${assetPath(src: 'house-visiting.svg')}";
                   else if(d.label == "3") return "${assetPath(src: 'icons/family.svg')}";
-                  else if(d.label == "4") return "${assetPath(src: 'party-in-house.png')}";
+                  else if(d.label == "4") return "${assetPath(src: 'party-in-house.svg')}";
                   else if(d.label == "5") return "${assetPath(src: 'icons/university.svg')}";
-                  else if(d.label == "6") return "${assetPath(src: 'work.png')}";
-                  else if(d.label == "7") return "${assetPath(src: 'park.png')}";
+                  else if(d.label == "6") return "${assetPath(src: 'sleepy-worker-at-work.svg')}";
+                  else if(d.label == "7") return "${assetPath(src: 'park.svg')}";
                   else if(d.label == "8") return "${assetPath(src: 'icons/commercial.svg')}";
                   else if(d.label == "9") return "${assetPath(src: 'icons/street-transport.svg')}";
-                  else return "${assetPath(src: 'global-map.png')}";
+                  else return "${assetPath(src: 'global-map.svg')}";
                 });
                 svg.selectAll('.group-label').data(data).enter()
               .append('text')
@@ -339,6 +409,21 @@
           var myData = ${data};
         </g:applyCodec>
 
+        var uData = [];
+        for(var i = 0; i < myData.length; i++) {
+            var eData = [];
+            for(var j = 0; j < myData[i]['data'].length; j++) {
+                eData.push({
+                    type: TimelineChart.TYPE.INTERVAL,
+                    from: new Date(myData[i]['data'][j]['from']),
+                    to:  new Date(myData[i]['data'][j]['to'])
+                });
+            }
+            if(eData.length > 0) {
+                uData.push({label: myData[i]['label'], data: eData});
+            }
+        }
+
         const element = document.getElementById('chart');
 
         const data = [{
@@ -495,7 +580,7 @@
             ]
         }];
 
-        const timeline = new TimelineChart(element, data, {
+        const timeline = new TimelineChart(element, uData, {
             tip: function(d) {
                 return d.at || `&#36;{d.from}<br>&#36;{d.to}`;
             }

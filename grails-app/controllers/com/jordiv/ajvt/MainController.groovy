@@ -319,8 +319,112 @@ class MainController {
         //def csv = new File("/opt/test-data.csv")
         def csv = new File("/opt/" + csvFile)
 
+        def currentDay = 1
+        def currentLoc = -1
 
-      def data = [
+        def aData = []
+        for(def i = 1; i <= 10; i++) {
+            aData.add(['label': i, 'data': []])
+        }
+        //println aData
+        //println aData[2]
+
+        def interval = [:]
+
+        csv.splitEachLine(',') { row ->
+            currentDay = row[0]
+
+            def time = row[1]
+            if(time.size() == 1) time = "0" + time + ":00"
+            else if(time.size() == 2) time = time + ":00"
+            else if(time.size() == 3 && time.indexOf(':') == 1) time = "0" + time + "0"
+            else if(time.size() == 4 && time.indexOf(':') == 1) time = "0" + time
+            else if(time.size() == 4 && time.indexOf(':') == 2) time = time + "0"
+
+            if(currentLoc == -1) {
+                currentLoc = row[2]
+
+                interval['type'] = "TimelineChart.TYPE.INTERVAL"
+                def rowDate = "2016/02/0" + currentDay + " " + time
+                interval['from'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+            }
+
+            if(row[2] != currentLoc && row[2] != null) {
+                //println "Location changed from " + currentLoc + " to " + row[2]
+                def rowDate = "2016/02/0" + currentDay + " " + time
+                interval['to'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+
+                for(def i = 0; i < aData.size(); i++) {
+                    if(aData[i]['label'].equals(Integer.parseInt(currentLoc))) aData[i]['data'].add(interval.clone())
+                }
+
+                interval = [:]
+                interval['type'] = "TimelineChart.TYPE.INTERVAL"
+                interval['from'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+
+                currentLoc = row[2]
+            }
+        }
+
+        def rowDate = "2016/02/07 24:00"
+        interval['to'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+
+        for(def i = 0; i < aData.size(); i++) {
+            if(aData[i]['label'] == Integer.parseInt(currentLoc)) aData[i]['data'].add(interval.clone())
+        }
+
+        def totalPlaces = 0
+        for(def i = 0; i < aData.size(); i++) {
+            if(aData[i]['data'].size() > 0) totalPlaces++
+        }
+        //println aData
+
+        /*
+        def allData = []
+        def dayIntervals = []
+        def currentInterval = [:]
+        interval['type'] = "TimelineChart.TYPE.INTERVAL"
+        def first = true
+        csv.splitEachLine(',') { row ->
+            if(currentLoc == -1) currentLoc = row[2]
+            if(Integer.parseInt(row[0]) != currentDay) {
+
+            }
+            else {
+                // If user changed location ...
+                if(currentLoc != row[2]) {
+                    // First we close the previous interval
+                    def rowDate = "2016/02/0" + currentDay + " " + row[1]
+                    interval['to'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+
+                    dayIntervals.append(interval)
+                    def dayData = [:]
+                    dayData['label'] = currentDay
+                    dayData[]
+
+
+                    currentInterval = [:]
+                    interval['type'] = "TimelineChart.TYPE.INTERVAL"
+                    interval['from'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+                }
+                // We are in the same location
+                else {
+                    // If this is the first data point at this location ...
+                    if(first) {
+                        def rowDate = "2016/02/0" + currentDay + " " + row[1]
+                        interval['from'] = new Date().parse('yyyy/MM/dd HH:mm', rowDate)
+                        first = false
+                    }
+                }
+
+                interval['from'] =
+            }
+        }
+        */
+
+
+
+      def odata = [
         'label': 'Home',
         'data': [[
           'type': 'TimelineChart.TYPE.POINT',
@@ -334,7 +438,8 @@ class MainController {
         ]]
       ]
 
-      render(view: "timeSeries", model: ['data': data as JSON])
+      def count = totalPlaces.intdiv(2) + "00px"
+      render(view: "timeSeries", model: ['data': aData as JSON, 'count': count])
     }
 
     def locationEvolution() {
