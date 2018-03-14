@@ -23,7 +23,7 @@
 <body>
     <div class="mdl-typography--text-center">
         <div class="mdl-typography--display-1-color-contrast">
-            Activity Journal Visualization Tool
+            Activity Diary Visualization Tool
         </div>
     </div>
     <div class="mdl-grid">
@@ -32,7 +32,7 @@
                 About
             </p>
             <p class="mdl-typography--body-1 mdl-typography--text-justify">
-                This tool allows to visualize data from an activity journal where multiple participants have logged their location information in 15-minute interavals.
+                This tool allows to visualize data from an activity diary where multiple participants have logged their location information in 15-minute interavals.
             </p>
         </div>
         <div class="mdl-cell mdl-cell--10-col">

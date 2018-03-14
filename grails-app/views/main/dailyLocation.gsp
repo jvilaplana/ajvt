@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="layout" content="main"/>
-    <title>AJVT | Force layout with images</title>
+    <title>ADVT | Force layout with images</title>
     <style>
     path.link {
         fill: none;
